@@ -18,19 +18,22 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="mfp.cpp">
+    <ClCompile Include="ap.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="square.h">
-      <Filter>Файлы исходного кода</Filter>
+    <ClInclude Include="ap.h">
+      <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="graph.h">
-      <Filter>Файлы исходного кода</Filter>
+      <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="mfp.h">
-      <Filter>Файлы исходного кода</Filter>
+    <ClInclude Include="square.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="bf.h">
+      <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

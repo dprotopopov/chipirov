@@ -1,7 +1,7 @@
-// https://en.wikipedia.org/wiki/Maximum_flow_problem
-// Пользуясь методом потенциалов, написать и исследовать программу
-// поиска максимального однородного потока из заданной 
-// вершины в заданную на взвешенном ориентированном графе.
+// https://en.wikipedia.org/wiki/Assignment_problem
+// Написать и исследовать программу решения задачи о назначениях полным перебором,
+// целью которой является минимизация суммарных затрат при условии,
+// что время выполнения плана не превышает Т с использованием булевых переменных.
 
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -19,9 +19,17 @@
 
 using namespace std;
 
+template<typename T> ostream& operator<<(ostream& out, std::vector<T> &vector)
+{
+	int n = vector.size();
+	for(int i=0; i<n ; i++) out << vector[i] << " ";
+	return out;
+}
+
 #include "square.h"
 #include "graph.h"
-#include "mfp.h"
+#include "bf.h"
+#include "ap.h"
 
 enum t_ask_mode {
 	NOASK = 0,
@@ -33,14 +41,6 @@ enum t_trace_mode {
 };
 t_ask_mode ask_mode = NOASK;
 t_trace_mode trace_mode = TRACE;
-
-template<typename T> ostream& operator<<(ostream& out, std::vector<T> &vector)
-{
-	int n = vector.size();
-	for(int i=0; i<n ; i++) out << vector[i] << " ";
-	return out;
-}
-
 
 int main(int argc, char* argv[])
 {
@@ -56,8 +56,8 @@ int main(int argc, char* argv[])
 	{
 		if(strcmp(argv[i],"-help")==0) 
 		{
-			std::cout << "Задача о максимальном потоке" << std::endl;
-			std::cout << "\tСм. https://en.wikipedia.org/wiki/Maximum_flow_problem" << std::endl;
+			std::cout << "Задача о назначениях" << std::endl;
+			std::cout << "\tСм. https://en.wikipedia.org/wiki/Assignment_problem" << std::endl;
 		}
 		else if(strcmp(argv[i],"-ask")==0) ask_mode = ASK;
 		else if(strcmp(argv[i],"-noask")==0) ask_mode = NOASK;
@@ -70,13 +70,20 @@ int main(int argc, char* argv[])
 	if(input_file_name!=NULL) freopen(input_file_name,"r",stdin);
 	if(output_file_name!=NULL) freopen(output_file_name,"w",stdout);
 
+	std::cout << "Введите максимальное время: " << std::endl;
+	double maximum_time; 
+	std::string buffer = "";
+	std::getline(std::cin, buffer);
+	std::istringstream ss(buffer);
+	ss>>maximum_time;
+
 	std::cout << "Вводите строки. " << std::endl
 		<< "Первая строка содержит количество узлов" << std::endl
-		<< "Последующие строки в формате i j weight" << std::endl
+		<< "Последующие строки в формате i j time price" << std::endl
 		<< "По окончание ввода введите Ctrl+Z" << std::endl;
 
 	graph<double> g;
-	maximum_flow_problem<double> mfp;
+	assignment_problem<double> ap;
 
 	std::cin >> g;
 	int n = g.size();
@@ -84,43 +91,22 @@ int main(int argc, char* argv[])
 	std::cout << "Граф:" << std::endl;
 	std::cout << g << std::endl;
 
-	std::cout << "Кратчайшие пути:" << std::endl;
-	for(int i=0; i<n ; i++)
+	std::cout << "Поиск назначения:" << std::endl;
+	try
 	{
-		for(int j=0; j<n ; j++)
-		{
-			if(i!=j)
-			{
-				try
-				{
-					std::vector<int> path;
-					int length = mfp.find_minimal_path(path,i,j,g); // формируется исключение при отсутствии пути
-					std::cout << path << std::endl;
-				}
-				catch (...)
-				{
-				}
-			}
-		}
+		std::vector<int> assignment;
+		double time;
+		double price;
+		ap.remove_gt_maximum_time(maximum_time,g); // удаление возможных назначений времени больше заданного
+		std::cout << g << std::endl;
+		ap.find_optimal_assignment(assignment,time,price,g); // формируется исключение при отсутствии назначения
+		std::cout << "Назначения:" << assignment << std::endl;
+		std::cout << "Цена:" << price << std::endl;
+		std::cout << "Время:" << time << std::endl;
 	}
-
-	std::cout << "Максимальный однородный поток из заданной вершины в заданную вершину:" << std::endl;
-	for(int i=0; i<n ; i++)
+	catch (...)
 	{
-		for(int j=0; j<n ; j++)
-		{
-			if(i!=j)
-			{
-				try
-				{
-					double maximum_flow = mfp.find_maximum_flow(i,j,g); // формируется исключение при отсутствии пути
-					std::cout << i << " " << j << " "  << maximum_flow << std::endl;
-				}
-				catch (...)
-				{
-				}
-			}
-		}
+		std::cout << "Не найдено" << std::endl;
 	}
 
 	getchar();

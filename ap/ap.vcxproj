@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4EED4365-77D7-4CC2-86E7-571EF6E0D9ED}</ProjectGuid>
+    <ProjectGuid>{03278C6A-161A-4381-9031-CEFD0D322912}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>mfp</RootNamespace>
+    <RootNamespace>ap</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -79,11 +79,12 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="mfp.cpp" />
+    <ClCompile Include="ap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ap.h" />
+    <ClInclude Include="bf.h" />
     <ClInclude Include="graph.h" />
-    <ClInclude Include="mfp.h" />
     <ClInclude Include="square.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
