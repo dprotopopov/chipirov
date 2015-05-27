@@ -217,7 +217,7 @@ int main(int argc, char* argv[])
 			std::cout << "\tСм. https://ru.wikipedia.org/wiki/Дихотомия" << std::endl;
 		}
 		else if(strcmp(argv[i],"-ask")==0) ask_mode = ASK;
-		else if(strcmp(argv[i],"-moask")==0) ask_mode = NOASK;
+		else if(strcmp(argv[i],"-noask")==0) ask_mode = NOASK;
 		else if(strcmp(argv[i],"-trace")==0) trace_mode = TRACE;
 		else if(strcmp(argv[i],"-notrace")==0) trace_mode = NOTRACE;
 		//		else if(strcmp(argv[i],"-n")==0) n = atoi(argv[++i]);
