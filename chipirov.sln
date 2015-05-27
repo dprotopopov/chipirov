@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dichotomy", "dichotomy\dich
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mfp", "mfp\mfp.vcxproj", "{4EED4365-77D7-4CC2-86E7-571EF6E0D9ED}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tree", "tree\tree.vcxproj", "{5F5EDCE8-EAB7-4A42-B08B-AAD6438649BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,10 @@ Global
 		{4EED4365-77D7-4CC2-86E7-571EF6E0D9ED}.Debug|Win32.Build.0 = Debug|Win32
 		{4EED4365-77D7-4CC2-86E7-571EF6E0D9ED}.Release|Win32.ActiveCfg = Release|Win32
 		{4EED4365-77D7-4CC2-86E7-571EF6E0D9ED}.Release|Win32.Build.0 = Release|Win32
+		{5F5EDCE8-EAB7-4A42-B08B-AAD6438649BC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5F5EDCE8-EAB7-4A42-B08B-AAD6438649BC}.Debug|Win32.Build.0 = Debug|Win32
+		{5F5EDCE8-EAB7-4A42-B08B-AAD6438649BC}.Release|Win32.ActiveCfg = Release|Win32
+		{5F5EDCE8-EAB7-4A42-B08B-AAD6438649BC}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
