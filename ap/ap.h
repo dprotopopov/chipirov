@@ -1,7 +1,7 @@
 #ifndef __AP_H
 #define __AP_H
 
-#include "square.h"
+#include "square_matrix.h"
 #include "graph.h"
 #include "bf.h"
 
@@ -61,7 +61,7 @@ public:
 	void find_optimal_assignment(std::vector<int> &optimal_assignment,T &optimal_time,T &optimal_price,graph<T> &g)
 	{
 		int n = g.size();
-		brutto_force bf; // алгоритм полного перебора
+		brute_force bf; // алгоритм полного перебора
 		for(bool b=bf.get_first(optimal_assignment,n);b;b=bf.get_next(optimal_assignment))
 		{
 			try

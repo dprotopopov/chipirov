@@ -1,15 +1,15 @@
 #ifndef __GRAPH_H
 #define __GRAPH_H
 
-#include "square.h"
+#include "square_matrix.h"
 
 // класс графа, задаваемого матрицей смежности
 template<typename T> class graph 
 {
 public:
-	square<T> _times; // матрица времени
-	square<T> _prices; // матрица стоимостей
-	square<bool> _exists; // матрица признака существования пути
+	square_matrix<T> _times; // матрица времени
+	square_matrix<T> _prices; // матрица стоимостей
+	square_matrix<bool> _exists; // матрица признака существования пути
 	int _n; // количество узлов
 public:
 	graph()

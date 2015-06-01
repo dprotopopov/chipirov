@@ -1,27 +1,27 @@
-#ifndef __SQUARE_H
-#define __SQUARE_H
+#ifndef __SQUARE_MATRIX_H
+#define __SQUARE_MATRIX_H
 
 // класс квадратной матрицы
-template<typename T> class square : public std::vector<std::vector<T>>
+template<typename T> class square_matrix : public std::vector<std::vector<T>>
 {
 public:
-	square()
+	square_matrix()
 	{
 	}
 
-	square(int n)
+	square_matrix(int n)
 	{
 		assign_default(n);
 	}
 
-	square(square &s)
+	square_matrix(square_matrix &s)
 	{
 		int n=s.size();
 		resize(n);
 		for(int i=0;i<n;i++) at(i).assign(s[i].begin(),s[i].end());
 	}
 
-	~square()
+	~square_matrix()
 	{
 	}
 
@@ -31,4 +31,4 @@ public:
 		for(int i=0;i<n;i++) at(i).assign(n,(T)0);
 	}	
 };
-#endif // __SQUARE_H
+#endif // __SQUARE_MATRIX_H

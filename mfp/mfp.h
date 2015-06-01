@@ -1,8 +1,8 @@
 #ifndef __MFP_H
 #define __MFP_H
 
-#include "square.h"
-#include "graph.h"
+#include "square_matrix.h"
+#include "weighted_graph.h"
 
 template<typename T> class maximum_flow_problem
 {
@@ -10,7 +10,7 @@ public:
 	// алгоритм построения вектора потенциалов из узла s в остальные узлы
 	// петли игнорируются
 	// Метод потенциалов гарантирует определение кратчайших путей из выбранной вершины во все остальные
-	void build_potential_from(std::vector<T> &p, std::vector<bool> &e, int s, graph<T> &g)
+	void build_potential_from(std::vector<T> &p, std::vector<bool> &e, int s, weighted_graph<T> &g)
 	{
 		int n = g.size();
 		T weight;
@@ -66,7 +66,7 @@ public:
 	}
 
 	// алгоритм построения вектора доступных узлов из узла k
-	void check_path_from(std::vector<bool> &e, int k, graph<T> &g)
+	void check_path_from(std::vector<bool> &e, int k, weighted_graph<T> &g)
 	{
 		int n = g.size();
 		T weight;
@@ -99,7 +99,7 @@ public:
 	// Поиск кратчайшего пути 
 	// формируется исключение при отсутствии пути
 	// возвращает длину пути
-	int find_minimal_path(std::vector<int> &path, int s, int t, graph<T> &g)
+	int find_minimal_path(std::vector<int> &path, int s, int t, weighted_graph<T> &g)
 	{
 		int n = g.size();
 		std::vector<T> p;
@@ -139,7 +139,7 @@ public:
 		return path.size()-1;
 	}
 	// АЛГОРИТМ ПОИСКА МАКСИМАЛЬНОГО ПОТОКА
-	T find_maximum_flow(int s, int t, graph<T> &g)
+	T find_maximum_flow(int s, int t, weighted_graph<T> &g)
 	{
 		int n = g.size();
 		T weight;
@@ -161,7 +161,7 @@ public:
 			}
 		}
 
-		graph<T> g1(g);
+		weighted_graph<T> g1(g);
 
 		T maximum_flow=(T)0;
 
@@ -178,7 +178,7 @@ public:
 					}
 				}
 
-				graph<T> g2(g1);
+				weighted_graph<T> g2(g1);
 
 				for(int i=0; i<n ; i++)
 				{

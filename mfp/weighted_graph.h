@@ -1,33 +1,34 @@
-#ifndef __GRAPH_H
-#define __GRAPH_H
+#ifndef __WEIGHTED_GRAPH_H
+#define __WEIGHTED_GRAPH_H
 
-#include "square.h"
+#include "square_matrix.h"
 
 // класс графа, задаваемого матрицей смежности
-template<typename T> class graph 
+// Взвешенный граф — граф, каждому ребру которого поставлено в соответствие некое значение (вес ребра).
+template<typename T> class weighted_graph 
 {
 public:
-	square<T> _weights; // матрица весов
-	square<bool> _exists; // матрица признака существования пути
+	square_matrix<T> _weights; // матрица весов
+	square_matrix<bool> _exists; // матрица признака существования пути
 	int _n; // количество узлов
 public:
-	graph()
+	weighted_graph()
 	{
 	}
 
-	graph(int n)
+	weighted_graph(int n)
 	{
 		assign_default(n);
 	}
 
-	graph(graph &g):
+	weighted_graph(weighted_graph &g):
 		_n(g.size()),
 		_weights(g._weights),
 		_exists(g._exists)
 	{
 	}
 
-	~graph()
+	~weighted_graph()
 	{
 	}
 
@@ -53,7 +54,7 @@ public:
 	}
 };
 
-template<typename T> ostream& operator<<(ostream& out, graph<T> &g)
+template<typename T> ostream& operator<<(ostream& out, weighted_graph<T> &g)
 {
 	int n = g.size();
 	T weight;
@@ -70,7 +71,7 @@ template<typename T> ostream& operator<<(ostream& out, graph<T> &g)
 	return out;
 }
 
-template<typename T> istream& operator>>(istream& in, graph<T> &g)
+template<typename T> istream& operator>>(istream& in, weighted_graph<T> &g)
 {
 	std::string buffer = "";
 
@@ -96,4 +97,4 @@ template<typename T> istream& operator>>(istream& in, graph<T> &g)
 	return in;
 }
 
-#endif // __GRAPH_H
+#endif // __WEIGHTED_GRAPH_H

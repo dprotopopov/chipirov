@@ -29,10 +29,10 @@
     <ClInclude Include="graph.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="square.h">
+    <ClInclude Include="bf.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="bf.h">
+    <ClInclude Include="square_matrix.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>

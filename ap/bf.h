@@ -2,7 +2,7 @@
 #define __BF_H
 
 // алгоритм полного перебора
-class brutto_force
+class brute_force
 {
 	std::vector<std::vector<int>> permutations;
 	std::vector<std::vector<int>>::iterator iterator;

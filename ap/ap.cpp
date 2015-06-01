@@ -26,7 +26,7 @@ template<typename T> ostream& operator<<(ostream& out, std::vector<T> &vector)
 	return out;
 }
 
-#include "square.h"
+#include "square_matrix.h"
 #include "graph.h"
 #include "bf.h"
 #include "ap.h"

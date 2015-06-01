@@ -82,9 +82,9 @@
     <ClCompile Include="mfp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="graph.h" />
+    <ClInclude Include="weighted_graph.h" />
     <ClInclude Include="mfp.h" />
-    <ClInclude Include="square.h" />
+    <ClInclude Include="square_matrix.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

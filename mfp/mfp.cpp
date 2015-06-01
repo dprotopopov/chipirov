@@ -19,8 +19,8 @@
 
 using namespace std;
 
-#include "square.h"
-#include "graph.h"
+#include "square_matrix.h"
+#include "weighted_graph.h"
 #include "mfp.h"
 
 enum t_ask_mode {
@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
 		<< "Последующие строки в формате i j weight" << std::endl
 		<< "По окончание ввода введите Ctrl+Z" << std::endl;
 
-	graph<double> g;
+	weighted_graph<double> g;
 	maximum_flow_problem<double> mfp;
 
 	std::cin >> g;
