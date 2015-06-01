@@ -48,6 +48,7 @@ enum t_selftest_mode {
 t_ask_mode ask_mode = ASK;
 t_trace_mode trace_mode = NOTRACE;
 t_selftest_mode selftest_mode = NOSELFTEST;
+int test_n=10;
 
 int main(int argc, char* argv[])
 {
@@ -88,7 +89,6 @@ int main(int argc, char* argv[])
 	disordered_graph g;
 	vertex_cover_problem vcp(trace_mode == TRACE);
 	std::vector<std::vector<bool>> solutions;
-	int test_n=20;
 
 	if(selftest_mode == NOSELFTEST) std::cin >> g;
 	else {

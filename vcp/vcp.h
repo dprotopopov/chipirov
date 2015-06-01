@@ -18,26 +18,32 @@ private:
 	//  ласс множества решений (плана)
 	class branch_and_bounds_item
 	{
+		std::vector<bool> value0; // Ќижн€€ граница множества решений (плана)
+		std::vector<bool> value1; // ¬ерхн€€ граница множества решений (плана)
+
 	public:
-		std::vector<bool> value; // множество решений (план)
+		std::vector<bool> &value() 
+		{ 
+			assert(value0==value1);
+			return value0; 
+		}
 
-		branch_and_bounds_item()	
+		branch_and_bounds_item(int n)	
+		{
+			value0.assign(n,false);
+			value1.assign(n,true);
+		}
+
+		branch_and_bounds_item(std::vector<bool> &v0, std::vector<bool> &v1) :
+			value0(v0),
+			value1(v1)
 		{
 		}
 
-		branch_and_bounds_item(std::vector<bool> &v) :
-			value(v)
-		{
-		}
-
-		branch_and_bounds_item(std::vector<bool> &v, bool append) :
-			value(v)
-		{
-			value.push_back(append);
-		}
 
 		branch_and_bounds_item(const branch_and_bounds_item &di) : 
-			value(di.value)
+			value0(di.value0),
+			value1(di.value1)
 		{
 		}
 
@@ -45,11 +51,17 @@ private:
 		{
 		}
 
-		void split(std::vector<branch_and_bounds_item> &results, disordered_graph &g)
+		void split(int i, std::vector<branch_and_bounds_item> &results, disordered_graph &g)
 		{
-			branch_and_bounds_item di0(value,false);
-			branch_and_bounds_item di1(value,true);
+			assert(value0[i]==false);
+			assert(value1[i]==true);
 
+			std::vector<bool> v0(value0);
+			std::vector<bool> v1(value1);
+			v1[i]=false;
+			v0[i]=true;
+			branch_and_bounds_item di0(value0,v1);
+			branch_and_bounds_item di1(v0,value1);
 			if(di0.valid(g)) results.push_back(di0);
 			if(di1.valid(g)) results.push_back(di1);
 		}
@@ -57,70 +69,50 @@ private:
 		// Ќижн€€ граница множества решений (плана)
 		int low(disordered_graph &g)
 		{
-			std::vector<bool> value1;
-			other(value1,g);
-			
-			return std::count (value.begin(), value.end(), true)
-				+((std::count (value1.begin(), value1.end(), true)>0)?1:0);
+			int count=std::count (value0.begin(), value0.end(), true);
+			std::vector<bool> v;
+			forward(v,value0,g);
+			if(std::count (v.begin(), v.end(), true)<g.size()) count++;
+			return count;
 		}
 
 		// ¬ерхн€€ граница множества решений (плана)
 		int high(disordered_graph &g)
 		{
-			int n=g.size();
-			int k=value.size();
-			assert(k<=n);
-			return std::count (value.begin(), value.end(), true)+(n-k);
+			return std::count (value1.begin(), value1.end(), true);
 		}
 
 		friend ostream& operator<<(ostream& out, branch_and_bounds_item &item)
 		{
-			out << "(" << item.value << ")";
+			out << "(" << item.value0  << "-" << item.value1 << ")";
 			return out;
 		}
 
 	private:
 
 		// ѕроверка достижимости всех вершин графа
-		// (добавл€ем в план все оставшиес€ вершины и провер€ем)
 		bool valid(disordered_graph &g)
 		{
-			int n=g.size();
-			int k=value.size();
-			
-			for(int i=0;i<k;i++)
-			{
-				bool b=value[i];
-				for(int j=0;j<k&&!b;j++)
-				{
-					g.get(i,j,b);
-					b=b&&value[j];
-				}
-				for(int j=k;j<n&&!b;j++)
-				{
-					g.get(i,j,b);
-				}
-				if(!b) return false;
-			}
-
-			return true;
+			std::vector<bool> v;
+			forward(v,value1,g);
+			return std::count (v.begin(), v.end(), true)==g.size();
 		}
 
-		// вектор оставшихс€ вершин
-		// (исключаем достижимые вершины из оставшегос€ единичного вектора)
-		void other(std::vector<bool> &r, disordered_graph &g)
+		// список вершин достижимых за один шаг
+		static void forward(std::vector<bool> &v, std::vector<bool> &value, disordered_graph &g)
 		{
 			int n=g.size();
-			int k=value.size();
-			bool b;
-			r.assign(n-k, true);
-			for(int i=0;i<k;i++) if(value[i])
+			int i=0;
+
+			v.clear();
+			for(int i=0;i<n;i++)
 			{
-				for(int j=k;j<n;j++) if(r[j-k])
+				bool b=value[i];
+				for(int j=0;j<n&&!b;j++) if(value[j]) 
 				{
 					g.get(i,j,b);
-					r[j-k]=!b;
 				}
+				v.push_back(b);
 			}
 		}
 	};
@@ -147,7 +139,7 @@ public:
 
 		std::vector<branch_and_bounds_item> prev;
 		std::vector<branch_and_bounds_item> next;
-		branch_and_bounds_item root;
+		branch_and_bounds_item root(n);
 		prev.push_back(root);
 		for(int k=0;k<n;k++)
 		{
@@ -159,7 +151,7 @@ public:
 				iterator<prev.end();
 				iterator++)
 			{
-				iterator->split(next,g);
+				iterator->split(k,next,g);
 			}
 
 			if(trace) cout << "split " << prev.size() << "->" << next.size() << std::endl;
@@ -222,7 +214,7 @@ public:
 			iterator<prev.end();
 			iterator++)
 		{
-			solutions.push_back(iterator->value);
+			solutions.push_back(iterator->value());
 		}
 	}
 };
