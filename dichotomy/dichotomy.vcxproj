@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{BF8FCE1A-F9F8-49B7-901C-FC6B807C0004}</ProjectGuid>
+    <ProjectGuid>{83AA1832-F2B9-49E1-9D7D-302F2C708529}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>dichotomy</RootNamespace>
     <ProjectName>dichotomy</ProjectName>

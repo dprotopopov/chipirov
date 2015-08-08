@@ -73,7 +73,7 @@ static const unsigned _m[] = {3, 3};
 static const double _a[] = {0, 0};
 static const double _b[] = {100, 100};
 static check_func *_f[]  = {&f1,&f2};
-static const double _e=1e-20;
+static const double _e=1e-15;
 
 
 /////////////////////////////////////////////////////////
@@ -179,8 +179,13 @@ double find(std::vector<double> &x,
 
 		if(delta(a,b)<e) return y;
 
-		for(unsigned i=0;i<a.size();i++) a[i]=max(a[i],x[i]-(b[i]-a[i])/m[i]);
-		for(unsigned i=0;i<b.size();i++) b[i]=min(b[i],x[i]+(b[i]-a[i])/m[i]);
+		for(unsigned i=0;i<std::min(a.size(),b.size());i++) {
+			double aa = a[i];
+			double bb = b[i];
+			double xx = x[i];
+			a[i]=std::max(aa,xx-(bb-aa)/m[i]);
+			b[i]=std::min(bb,xx+(bb-aa)/m[i]);
+		}
 	}
 }
 
